@@ -1,3 +1,4 @@
+RESOLUTION: check for 'subtype': 'message_replied' and skip if found
 normal message:
 
 {'type': 'message', 'channel': 'C4ZJ88LQM', 'user': 'U4DF8FA8M', 'text': 'hello', 'ts': '1507957259.000031', 'source_team': 'T4E38JYRL', 'team': 'T4E38JYRL'}

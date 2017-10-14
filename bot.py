@@ -1,4 +1,5 @@
 import asyncio, json, sys, aiohttp
+import logic
 from config import DEBUG, TOKEN
 
 async def api_call(method, data=None, token=TOKEN):
@@ -11,9 +12,6 @@ async def api_call(method, data=None, token=TOKEN):
 			assert 200 == response.status, ('{0} with {1} failed.'.format(method, data))
 			return await response.json()
 
-async def postMessage(channel, message):
-	return await api_call("chat.postMessage", {'channel' : channel, 'text' : message, 'as_user': True})
-
 async def bot(token=TOKEN):
 	"""Create a bot that joins Slack."""
 	rtm = await api_call("rtm.start")
@@ -22,18 +20,54 @@ async def bot(token=TOKEN):
 	async with aiohttp.ClientSession() as session:
 		async with session.ws_connect(rtm["url"]) as ws:
 			async for msg in ws:
-				assert msg.tp == aiohttp.MsgType.text
+				assert msg.tp == aiohttp.WSMsgType.TEXT
 
-				x = json.loads(msg.data)
-				print(x)
+				message = json.loads(msg.data)
+				print(message)
 
-				if x['type'] == "message":
-					if x['text'] == "hello":
-						print("!!! SENDING MESSAGE !!!")
-						result = await postMessage(x['channel'], "hihi")
-						print(result)
-						print("!!! DONE SENDING MESSAGE !!!")
-					elif x['text'] == "quit":
+				if message['type'] == "hello":
+					logic.handleHello(message)
+
+				elif message['type'] == "reconnect_url":
+					logic.handleReconnectURL(message)
+
+				# Ignore any non-messages for now
+				if 'type' not in message or message['type'] != "message":
+					continue
+
+				# Ignore any 'replied to a thread' announcements
+				if 'subtype' in message and message['subtype'] == "message_replied":
+					continue
+
+				isThread = 'thread_ts' in message
+
+				if message['type'] == "message":
+					if message['text'].startswith("<@U7J9S9C5S>"):
+						payload = {
+							'text' : ":glaceon-thinking:",
+							'channel' : message["channel"],
+							'as_user' : True
+						}
+
+						if isThread:
+							payload['thread_ts'] = message['thread_ts']
+
+						result = await api_call("chat.postMessage", payload)
+						print("SENDING MESSAGE: {}".format(result))
+
+					elif message['text'] == "hello":
+						payload = {}
+						payload['text'] = "hihi"
+						payload['channel'] = message['channel']
+						payload['as_user'] = True
+
+						if isThread:
+							payload['thread_ts'] = message['thread_ts']
+
+						result = await api_call("chat.postMessage", payload)
+						print("SENDING MESSAGE: {}".format(result))
+
+					elif message['text'] == "quit":
 						return 0
 
 if __name__ == "__main__":

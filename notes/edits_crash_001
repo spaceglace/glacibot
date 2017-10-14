@@ -1,0 +1,248 @@
+Message Edit:
+
+{
+ 'type': 'message', 
+ 'message': {
+	'type': 'message', 
+	'user': 'U4DF8FA8M', 
+	'text': ':+1::skin-tone-6:', 
+	'edited': {	'user': 'U4DF8FA8M', 'ts': '1508010434.000000'}, 
+	'ts': '1508010429.000018'}, 
+	'subtype': 'message_changed', 
+	'hidden': True, 
+	'channel': 'C4ZJ88LQM', 
+	'previous_message': {
+		'type': 'message', 
+		'user': 'U4DF8FA8M', 
+		'text': ':+1::skin-tone-2:', 
+		'ts': '1508010429.000018'}, 
+	'event_ts': '1508010434.000047', 
+	'ts': '1508010434.000047'}
+
+
+
+Normal Message:
+
+{
+ 'type': 'message', 
+ 'channel': 'C4ZJ88LQM', 
+ 'user': 'U4DF8FA8M', 
+ 'text': 'hello', 
+ 'ts': '1507957259.000031', 
+ 'source_team': 'T4E38JYRL', 
+ 'team': 'T4E38JYRL'}
+
+
+
+
+Threaded Message:
+
+{
+ 'type': 'message', 
+ 'message': {'type': 'message', 
+			 'user': 'U7J9S9C5S', 
+			 'text': 'hihi', 
+			 'bot_id': 'B7J85HPS6', 
+			 'thread_ts': '1507957259.000047', 
+			 'reply_count': 1, 
+			 'replies': [{'user': 'U4DF8FA8M', 'ts': '1507994856.000070'}], 
+			 'unread_count': 1, 
+			 'ts': '1507957259.000047'}, 
+ 'subtype': 'message_replied', 
+ 'hidden': True, 
+ 'channel': 'C4ZJ88LQM', 
+ 'event_ts': '1507994856.000075', 
+ 'ts': '1507994856.000075'}
+
+
+
+
+ Threaded Message Edit:
+
+# normal message
+{
+ 'type': 'message', 
+ 'channel': 'C4ZJ88LQM', 
+ 'user': 'U4DF8FA8M', 
+ 'text': 'qwerty', 
+ 'ts': '1508011068.000090', 
+ 'source_team': 'T4E38JYRL', 
+ 'team': 'T4E38JYRL', 
+ 'thread_ts': '1508006257.000011'}
+
+# someone replied to a thread
+{
+ 'type': 'message', 
+ 'message': {
+	'type': 'message', 
+	'user': 'U4DF8FA8M', 
+	'text': 'test', 
+	'thread_ts': '1508006257.000011', 
+	'reply_count': 8, 
+	'replies': [
+		{'user': 'U4DF8FA8M', 'ts': '1508006261.000017'}, 
+		{'user': 'U4DF8FA8M', 'ts': '1508006263.000104'}, 
+		{'user': 'U7J9S9C5S', 'ts': '1508006264.000004'}, 
+		{'user': 'U4DF8FA8M', 'ts': '1508006271.000001'}, 
+		{'user': 'U4DF8FA8M', 'ts': '1508006432.000012'}, 
+		{'user': 'U4DF8FA8M', 'ts': '1508009898.000100'}, 
+		{'user': 'U7J9S9C5S', 'ts': '1508009898.000117'}, 
+		{'user': 'U4DF8FA8M', 'ts': '1508011068.000090'}], 
+	'unread_count': 8, 
+	'ts': '1508006257.000011'}, 
+	'subtype': 'message_replied', 
+	'hidden': True, 
+	'channel': 'C4ZJ88LQM', 
+	'event_ts': '1508011068.000098', 
+	'ts': '1508011068.000098'}
+{
+ 'type': 'reconnect_url', 
+ 'url': 'wss://lbmulti-xo...UNdsGHkAbH8='}
+{
+ 'type': 'message', 
+ 'message': {
+	'type': 'message', 
+	'user': 'U4DF8FA8M', 
+	'text': 'dvorak', 
+	'edited': {'user': 'U4DF8FA8M', 'ts': '1508011076.000000'}, 
+	'thread_ts': '1508006257.000011', 
+	'parent_user_id': 'U4DF8FA8M', 
+	'ts': '1508011068.000090'}, 
+'subtype': 'message_changed', 
+'hidden': True, 
+'channel': 'C4ZJ88LQM', 
+'previous_message': {
+	'type': 'message', 
+	'user': 'U4DF8FA8M', 
+	'text': 'qwerty', 
+	'thread_ts': '1508006257.000011', 
+	'parent_user_id': 'U4DF8FA8M', 
+	'ts': '1508011068.000090'}, 
+'event_ts': '1508011076.000071', 
+'ts': '1508011076.000071'}
+
+
+
+
+Misc:
+
+{'type': 'hello'}
+{'type': 'reconnect_url', 'url': 'wss://lbmult...HMcGMWa38='}
+{'type': 'presence_change', 'presence': 'away', 'user': 'U7J9S9C5S'}
+{'type': 'presence_change', 'presence': 'active', 'user': 'U7J9S9C5S'}
+
+
+
+
+
+
+{'type': 'message', 'channel': 'C4ZJ88LQM', 'user': 'U4DF8FA8M', 'text': 'wow', 'ts': '1508011526.000023', 'source_team': 'T4E38JYRL', 'team': 'T4E38JYRL', 'thread_ts': '1508009892.000009', 'reply_broadcast': True}
+note: reply_broadcast: true
+
+{
+	'type': 'message', 
+	'message': {
+		'type': 'message', 
+		'user': 'U7J9S9C5S', 
+		'text': ':glaceon-thinking:', 
+		'bot_id': 'B7J85HPS6', 
+		'thread_ts': '1508009892.000009', 
+		'reply_count': 1, 
+		'replies': [{'user': 'U4DF8FA8M', 'ts': '1508011526.000023'}], 
+		'unread_count': 1, 
+		'ts': '1508009892.000009'}, 
+	'subtype': 'message_replied', 
+	'hidden': True, 
+	'channel': 'C4ZJ88LQM', 
+	'event_ts': '1508011526.000028', 
+	'ts': '1508011526.000028'}
+
+{
+	'type': 'message', 
+	'message': {
+		'text': 'wow', 
+		'type': 'message', 
+		'thread_ts': '1508009892.000009', 
+		'root': {
+			'type': 'message', 
+			'user': 'U7J9S9C5S', 
+			'text': ':glaceon-thinking:', 
+			'bot_id': 'B7J85HPS6', 
+			'thread_ts': '1508009892.000009', 
+			'reply_count': 1, 
+			'replies': [{'user': 'U4DF8FA8M', 'ts': '1508011526.000023'}], 
+			'unread_count': 1, 
+			'ts': '1508009892.000009'}, 
+		'subtype': 'thread_broadcast', 
+		'user': 'U4DF8FA8M', 
+		'ts': '1508011526.000023'}, 
+	'subtype': 'message_changed', 
+	'hidden': True, 
+	'channel': 'C4ZJ88LQM', 
+	'previous_message': {
+		'type': 'message', 
+		'user': 'U4DF8FA8M', 
+		'text': 'wow', 
+		'thread_ts': '1508009892.000009', 
+		'parent_user_id': 'U7J9S9C5S', 
+		'ts': '1508011526.000023'}, 
+	'event_ts': '1508011526.000030', 
+	'ts': '1508011526.000030'}
+	
+Traceback (most recent call last):
+  File "bot.py", line 69, in <module>
+    loop.run_until_complete(bot())
+  File "/Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/asyncio/base_events.py", line 466, in run_until_complete
+    return future.result()
+  File "bot.py", line 38, in bot
+    if message['text'].startswith("<@U7J9S9C5S>"):
+KeyError: 'text'
+
+
+
+{'type': 'message', 'channel': 'C4ZJ88LQM', 'user': 'U4DF8FA8M', 'text': 'plain', 'ts': '1508011585.000034', 'source_team': 'T4E38JYRL', 'team': 'T4E38JYRL'}
+{'type': 'message', 'deleted_ts': '1508011585.000034', 'subtype': 'message_deleted', 'hidden': True, 'channel': 'C4ZJ88LQM', 'previous_message': {'type': 'message', 'user': 'U4DF8FA8M', 'text': 'plain', 'ts': '1508011585.000034'}, 'event_ts': '1508011590.000035', 'ts': '1508011590.000035'}
+Traceback (most recent call last):
+  File "bot.py", line 69, in <module>
+    loop.run_until_complete(bot())
+  File "/Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/asyncio/base_events.py", line 466, in run_until_complete
+    return future.result()
+  File "bot.py", line 38, in bot
+    if message['text'].startswith("<@U7J9S9C5S>"):
+KeyError: 'text'
+
+
+
+
+
+
+
+
+
+
+
+Traceback (most recent call last):
+  File "bot.py", line 69, in <module>
+    loop.run_until_complete(bot())
+  File "/Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/asyncio/base_events.py", line 466, in run_until_complete
+    return future.result()
+  File "bot.py", line 38, in bot
+    if message['text'].startswith("<@U7J9S9C5S>"):
+KeyError: 'text'
+
+
+
+
+
+
+
+
+
+Traceback (most recent call last):
+  File "bot.py", line 69, in <module>
+    loop.run_until_complete(bot())
+  File "/Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/asyncio/base_events.py", line 466, in run_until_complete
+    return future.result()
+  File "bot.py", line 38, in bot
+    if message['text'].startswith("<@U7J9S9C5S>"):
+KeyError: 'text'
