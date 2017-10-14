@@ -1,2 +1,2 @@
 DEBUG = True
-TOKEN = "YOUR-SLACK-BOT-TOKEN-HERE"
+TOKEN = "testing"
