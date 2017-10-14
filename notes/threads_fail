@@ -1,0 +1,49 @@
+normal message:
+
+{'type': 'message', 'channel': 'C4ZJ88LQM', 'user': 'U4DF8FA8M', 'text': 'hello', 'ts': '1507957259.000031', 'source_team': 'T4E38JYRL', 'team': 'T4E38JYRL'}
+
+
+
+threaded message:
+
+{'type': 'presence_change', 'presence': 'active', 'user': 'U4DF8FA8M'}
+
+{'type': 'message', 'channel': 'C4ZJ88LQM', 'user': 'U4DF8FA8M', 'text': 'test1', 'ts': '1507994856.000070', 'source_team': 'T4E38JYRL', 'team': 'T4E38JYRL', 'thread_ts': '1507957259.000047'}
+
+{'type': 'message', 
+ 'message': {'type': 'message', 
+ 			 'user': 'U7J9S9C5S', 
+ 			 'text': 'hihi', 
+ 			 'bot_id': 'B7J85HPS6', 
+ 			 'thread_ts': '1507957259.000047', 
+ 			 'reply_count': 1, 
+ 			 'replies': [{'user': 'U4DF8FA8M', 
+ 			 			  'ts': '1507994856.000070'}], 
+ 			 'unread_count': 1, 
+ 			 'ts': '1507957259.000047'}, 
+ 'subtype': 'message_replied', 
+ 'hidden': True, 
+ 'channel': 'C4ZJ88LQM', 
+ 'event_ts': '1507994856.000075', 
+ 'ts': '1507994856.000075'}
+
+
+Traceback (most recent call last):
+  File "bot.py", line 42, in <module>
+    loop.run_until_complete(bot())
+  File "C:\Users\glacia\AppData\Local\Programs\Python\Python36\lib\asyncio\base_events.py", line 467, in run_until_complete
+    return future.result()
+  File "bot.py", line 31, in bot
+    if x['text'] == "hello":
+KeyError: 'text'
+
+
+
+
+
+
+
+
+{'type': 'message', 'channel': 'C4ZJ88LQM', 'user': 'U4DF8FA8M', 'text': 'a', 'ts': '1507995054.000031', 'source_team': 'T4E38JYRL', 'team': 'T4E38JYRL'}
+{'type': 'message', 'channel': 'C4ZJ88LQM', 'user': 'U4DF8FA8M', 'text': 'b', 'ts': '1507995058.000036', 'source_team': 'T4E38JYRL', 'team': 'T4E38JYRL', 'thread_ts': '1507995054.000031'}
+{'type': 'message', 'message': {'type': 'message', 'user': 'U4DF8FA8M', 'text': 'a', 'thread_ts': '1507995054.000031', 'reply_count': 1, 'replies': [{'user': 'U4DF8FA8M', 'ts': '1507995058.000036'}], 'unread_count': 1, 'ts': '1507995054.000031'}, 'subtype': 'message_replied', 'hidden': True, 'channel': 'C4ZJ88LQM', 'event_ts': '1507995058.000042', 'ts': '1507995058.000042'}
