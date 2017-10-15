@@ -23,52 +23,13 @@ async def bot(token=TOKEN):
 				assert msg.tp == aiohttp.WSMsgType.TEXT
 
 				message = json.loads(msg.data)
-				print(message)
+				#print(message)
 
-				if message['type'] == "hello":
-					logic.handleHello(message)
+				if message['type'] == "message" and 'subtype' in message:
+					logic.parse(message['subtype'], message)
+				else:
+					logic.parse(message['type'], message)
 
-				elif message['type'] == "reconnect_url":
-					logic.handleReconnectURL(message)
-
-				# Ignore any non-messages for now
-				if 'type' not in message or message['type'] != "message":
-					continue
-
-				# Ignore any 'replied to a thread' announcements
-				if 'subtype' in message and message['subtype'] == "message_replied":
-					continue
-
-				isThread = 'thread_ts' in message
-
-				if message['type'] == "message":
-					if message['text'].startswith("<@U7J9S9C5S>"):
-						payload = {
-							'text' : ":glaceon-thinking:",
-							'channel' : message["channel"],
-							'as_user' : True
-						}
-
-						if isThread:
-							payload['thread_ts'] = message['thread_ts']
-
-						result = await api_call("chat.postMessage", payload)
-						print("SENDING MESSAGE: {}".format(result))
-
-					elif message['text'] == "hello":
-						payload = {}
-						payload['text'] = "hihi"
-						payload['channel'] = message['channel']
-						payload['as_user'] = True
-
-						if isThread:
-							payload['thread_ts'] = message['thread_ts']
-
-						result = await api_call("chat.postMessage", payload)
-						print("SENDING MESSAGE: {}".format(result))
-
-					elif message['text'] == "quit":
-						return 0
 
 if __name__ == "__main__":
 	loop = asyncio.get_event_loop()
