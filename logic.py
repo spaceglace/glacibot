@@ -2,7 +2,12 @@ import asyncio
 import mysql, slack
 from config import DEBUG
 
-async def parse(branch, message):
+async def parse(message):
+	if message['type'] == "message" and 'subtype' in message:
+		branch = message['subtype']
+	else:
+		branch = message['type']
+
 	if branch in behavior:
 		await behavior[branch](message)
 	else:
@@ -26,12 +31,16 @@ async def message(message):
 
 	pieces = message['text'].split()
 
-	if pieces[0] == "find":
-		result = mysql.execute("SELECT `name`, `value` FROM `test` WHERE `name` = \"{0}\" LIMIT 1;".format(pieces[1]))
+	if pieces[0] == "vote":
+		result = mysql.execute("SELECT `ID`, `name`, `value` FROM `test` WHERE `name` = \"{0}\" LIMIT 1;".format(pieces[1]))
 
 		if len(result) > 0:
 			row = result[0]
-			output = "{0} has a value of {1}".format(row[0], row[1])
+			output = "{0} has a value of {1}".format(row['name'], row['value'] + 1)
+
+			# actually update it now
+			mysql.execute("UPDATE `test` SET `value` = `value` + 1 WHERE `ID` = {0}".format(row['ID']))
+			mysql.commit()
 		else:
 			output = "Couldn't find {0} in the database.".format(pieces[1])
 

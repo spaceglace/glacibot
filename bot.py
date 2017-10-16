@@ -12,13 +12,7 @@ async def bot():
 		async with session.ws_connect(rtm["url"]) as ws:
 			async for msg in ws:
 				assert msg.tp == aiohttp.WSMsgType.TEXT
-
-				message = json.loads(msg.data)
-
-				if message['type'] == "message" and 'subtype' in message:
-					await logic.parse(message['subtype'], message)
-				else:
-					await logic.parse(message['type'], message)
+				await logic.parse(json.loads(msg.data))
 
 
 if __name__ == "__main__":
