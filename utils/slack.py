@@ -13,7 +13,7 @@ async def listen():
 				current = json.loads(msg.data)
 
 				for command in env.commands:
-					await env.commands[command].parse(current)
+					await env.commands[command].parse(current) 
 
 async def api_call(method, data=None, token=env.TOKEN):
 	with aiohttp.ClientSession() as session:

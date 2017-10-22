@@ -1,12 +1,19 @@
 import pymysql
+import env
 
 db = None
 cursor = None
 
-def connect(username, password, database):
+def isAlive():
+	if db == None:
+		return False
+
+	return db.open
+
+def create():
 	global db, cursor
 
-	db = pymysql.connect("localhost", username, password, database, cursorclass=pymysql.cursors.DictCursor)
+	db = pymysql.connect("localhost", 'glacibot', env.SQLPASS, 'glacibot', cursorclass=pymysql.cursors.DictCursor)
 	cursor = db.cursor()
 
 def execute(statement):
@@ -18,5 +25,8 @@ def execute(statement):
 def commit():
 	db.commit()
 
-def disconnect():
+def escape(text):
+	return db.escape(text)
+
+def destroy():
 	db.close()
