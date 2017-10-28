@@ -20,9 +20,9 @@ async def parse(message):
 		if caller not in env.admins:
 			if env.mysql.isAlive():
 				# Check the database for the user if they're not an admin
-				result = env.mysql.execute("SELECT `power` FROM `moderators` WHERE `name` = {0} LIMIT 1;".format(caller))
+				resultUser = env.mysql.execute("SELECT `power` FROM `moderators` WHERE `name` = {0} LIMIT 1;".format(env.mysql.escape(caller)))
 
-				if len(result) > 0:
+				if len(resultUser) > 0:
 					priv = resultUser[0]['power']
 
 					if priv < requiredPower:

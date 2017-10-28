@@ -10,7 +10,7 @@ del utils.module
 env.slack = env.module.load('utils.slack')
 env.admin = env.module.load('utils.admin')
 env.mysql = env.module.load('utils.mysql')
-env.mysql.create()
+env.logger = env.module.load('utils.logger')
 
 # Load all of the custom commands
 for name in os.listdir('./commands/'):
@@ -24,6 +24,6 @@ for name in os.listdir('./commands/'):
 
 			print("Error in {0}.{1}: {2}".format(item, filename, error))
 
-loop = asyncio.get_event_loop()
-loop.run_until_complete(env.slack.listen())
-loop.close()
+# Start up the connections
+env.mysql.create()
+env.slack.connect()
