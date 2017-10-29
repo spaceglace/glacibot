@@ -1,19 +1,20 @@
 import asyncio, aiohttp, websockets, json, time
 import env
 
-async def ping(destination, interval, threshold):
+async def ping(destination, interval):
 	print("ping: Ping slave is born.")
 
 	while True:
-		print("ping: sleeping for {0} to ping".format(interval))
+		#print("ping: sleeping for {0} to ping".format(interval))
 		await asyncio.sleep(interval)
 
-		# track that we've sent a ping
-		env.stats['pingHang'] += 1
-		if env.stats['pingHang'] > threshold:
+		# Assume the connection broke if there's still a ping waiting
+		if env.ping['pending']:
 			break
 
-		print("ping: woke up to send ping... ({0})".format(env.stats['pingHang']))
+		env.ping['pending'] = True
+
+		#print("ping: woke up to send ping... ({0}s)".format(interval))
 		await destination(json.dumps({"type": "ping", "sent": time.time()}))
 
 	print("ping: Ping slave dies.")
@@ -29,23 +30,19 @@ async def parse(receive):
 			break
 
 		message = json.loads(message)
-		print("parse: {0}".format(message))
-
-		# test cases for restart/shutdown
-		if message['type'] == 'message' and 'subtype' not in message:
-			if message['text'] == "reboot":
-				print("brb")
-				break
-			elif message['text'] == "shutdown":
-				print("Death is whimsical today.")
-				env.shutDown = True
-				break
+		#print("parse: {0}".format(message))
 
 		# did we get a ping reply?
-		elif message['type'] == 'pong':
-			# reset the hang statistic
-			env.stats['pingHang'] = 0
-			env.stats['latency'] = time.time() - float(message['sent'])
+		if message['type'] == 'pong':
+			env.ping['pending'] = False
+			env.ping['latency'].append(time.time() - float(message['sent']))
+
+			if len(env.ping['latency']) > 20:
+				env.ping['latency'].pop(0)
+
+		else:
+			for command in env.commands:
+				await env.commands[command].parse(message)
 
 	print("parse: Parse slave dies.")
 
@@ -61,12 +58,13 @@ async def listen():
 
 			# if we get here, assume a good connection
 			print("listen: Listener is alive.")
+			env.stats['connected'] = time.time()
 			env.stats['pingHang'] = 0
 			reconnections = 0
 
 			async with websockets.connect(rtm["url"]) as ws:
 				# spin up the ping and websocket tasks
-				pingTask = asyncio.ensure_future(ping(ws.send, 5, 3))
+				pingTask = asyncio.ensure_future(ping(ws.send, 15))
 				parseTask = asyncio.ensure_future(parse(ws.recv))
 
 				print("listen: Red October, standing by...")
@@ -112,7 +110,7 @@ def connect():
 	print("connect: Loop is closed, all is quiet.")
 
 async def api_call(method, data=None, token=env.TOKEN):
-	print("api: Starting api call...")
+	#print("api: Starting api call...")
 
 	with aiohttp.ClientSession() as session:
 		# add our authentication token to the request
@@ -124,7 +122,7 @@ async def api_call(method, data=None, token=env.TOKEN):
 			async with session.post('https://slack.com/api/{0}'.format(method), data=form) as response:
 				# did it succeed?
 				if response.status == 200:
-					print("api: Got good api response.")
+					#print("api: Got good api response.")
 					return await response.json()
 
 				# are we getting rate limited?

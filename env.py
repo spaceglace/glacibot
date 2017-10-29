@@ -12,12 +12,16 @@ admins = []
 
 # Life statistics
 stats = {
-	'pingSent': 0,
-	'pingRecv': 0,
-	'pingHang': 0,
-	'latency': 0,
-	'birth' : 0,
 	'connected': 0,
 	'reconnects': 0
 }
+
+ping = {
+	'pending': False,
+	'latency': [],
+}
+
+#pings = []
+#pingID = 0
+
 shutDown = False
