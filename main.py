@@ -1,5 +1,8 @@
-import os, asyncio
+import os, time
 import env
+
+# Store when the bot was started
+env.stats['born'] = time.time()
 
 # Bootstrap the module loader into the environment
 import utils.module

@@ -12,7 +12,13 @@ admins = []
 
 # Life statistics
 stats = {
-	'connected': 0,
+	'born': 0,
+	'connected': 0
+}
+
+connection = {
+	'max delay': 30,
+	'delay step': 5,
 	'reconnects': 0
 }
 

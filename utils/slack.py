@@ -47,9 +47,6 @@ async def parse(receive):
 	print("parse: Parse slave dies.")
 
 async def listen():
-	reconnections = 0
-	max_delay = 30
-
 	while env.shutDown == False:
 		try:
 			# ask slack for a connection link
@@ -59,8 +56,11 @@ async def listen():
 			# if we get here, assume a good connection
 			print("listen: Listener is alive.")
 			env.stats['connected'] = time.time()
-			env.stats['pingHang'] = 0
-			reconnections = 0
+			env.ping['pending'] = False
+			env.connection['reconnects'] = 0
+
+			# debug shit
+			print("rtm['url'] = {0}".format(rtm["url"]))
 
 			async with websockets.connect(rtm["url"]) as ws:
 				# spin up the ping and websocket tasks
@@ -91,9 +91,9 @@ async def listen():
 		# did we mean to fall down here?
 		if env.shutDown == False:
 			# record the lost connection, and delay trying to reconnect
-			reconnections += 1
-			temp = min(reconnections * 5, max_delay)
-			print("listen: disconnected from server (try {0}). Retry in {1} seconds".format(reconnections, temp))
+			env.connection['reconnects'] += 1
+			temp = min(env.connection['reconnects'] * env.connection['delay step'], env.connection['max delay'])
+			print("listen: disconnected from server (try {0}). Retry in {1} seconds".format(env.connection['reconnects'], temp))
 			await asyncio.sleep(temp)
 
 	print("listen: All is finished.")
